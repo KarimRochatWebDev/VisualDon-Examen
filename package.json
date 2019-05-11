@@ -1,0 +1,34 @@
+{
+    "name": "VisualDon-Examen",
+    "version": "1.0.0",
+    "description": "Où vous avez trouvé les données\r Comment vous les avez transformées\r Quels choix vous avez faits et pourquoi\r Comment vous avez visualisé les données\r Une explication sur le choix du type de représentation\r Ce que vous souhaitez démontrer\r Le publique cible",
+    "main": "webpack.config.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack --config webpack.config.js --mode=production",
+        "watch": "webpack --config webpack.config.js --watch --mode=development"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Kaarroch/VisualDon-Examen.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Kaarroch/VisualDon-Examen/issues"
+    },
+    "homepage": "https://github.com/Kaarroch/VisualDon-Examen#readme",
+    "devDependencies": {
+        "webpack": "^4.31.0",
+        "webpack-cli": "^3.3.2"
+    },
+    "dependencies": {
+        "billboard": "^1.0.0",
+        "d3": "^5.9.2",
+        //"fs": "0.0.1-security",
+        "moment": "^2.24.0",
+        "node-fetch": "^2.5.0",
+        "ramda": "^0.26.1"
+    }
+}
