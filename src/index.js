@@ -1,25 +1,3 @@
-/*
-* Importation des librairies
-* FONCTIONNE
-*/
-
-const fetch = require('node-fetch')
-const d3 = require('d3')
-const billboard = require('billboard')
-const moment = require('moment')
-const http = require('http')
-const fs = require('fs')
-
-
-/*
-* Importation et transformation du CSV en Json
-* FONCTIONNE
-*/
-
-const csv = fs.readFileSync('../data/data.csv', 'utf-8')
-const data = d3.csvParse(csv);
-console.log(data);
-
 
 //Ensemble de liens qui peuvent m'être utiles
 //https://momentjs.com/
@@ -29,6 +7,17 @@ console.log(data);
 //https://observablehq.com/@idris-maps/fonctions-d3
 //https://github.com/idris-maps/exemple-transformation-de-donnees-avec-node/blob/master/drawGraph.js
 //https://github.com/idris-maps/heig-datavis-2019/blob/master/20190301-manipulation-dom/exemples/exemple_1.html
+
+/*
+* Importation des librairies et des fichiers
+*/
+
+const fetch = require('node-fetch')
+const d3 = require('d3')
+const billboard = require('billboard')
+const moment = require('moment')
+const http = require('http')
+const data = require('../data/donnees.json')
 
 
 /*
@@ -66,32 +55,32 @@ ${data.map((pays,i) => `<rect width="90" height="${pays.somme*8}" x="${(i)*100}"
 * Diamètre du point
 */
 
-//Il suffit d'utiliser un d3.scaleLinear domain range allant de 0 à 10
-diametreScale = d3.ScaleLinear
-    .domain(d3.min(data, d => d["Estimated Diameter"]), d3.max(data, d => d["Estimated Diameter"]))
+const diametreScale = d3.scaleLinear
+    .domain((d3.min(data, d => d.Diameter), d3.max(data, d => d.Diameter)))
     .range([0, 10])
 
-/*
+
+
+/*  
 * Couleur du point
 */
 
-colorScale = d3.ScaleLinear
-    .domain(d3.min(data, d => d["CA Distance Minimum (LD | au)"], d3.max(data, d => d["CA Distance Minimum (LD | au)"])])
+const colorScale = d3.scaleLinear
+    .domain([d3.min(data, d => d.DMinimum, d3.max(data, d=>d.DMinimum))])
     .range([blue, red])
-
 
 /*
 * Axe vertical
 */
 
 const yScale = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d["V infinity (km"])])
-    .range([0, d3.max(data, d => d["V infinity (km"])])
+    .domain([0, d3.max(data, d=>d.Vinfinity)])
+    .range([0, 35000])
 
 const axisY = d3.axisLeft()
 .scale(yScale)
 .ticks(7)
-.tickFormat(x)
+.tickFormat(d)
 
 
 /*
@@ -99,10 +88,9 @@ const axisY = d3.axisLeft()
 */
 
 //Utiliser moment pour obtenir les dates en ms
-moment('2019-Apr-03 08:31 ± < 00:01', 'YYYY-MM-DD').unix()
 
 const xScale = d3.scaleLinear()
-    .domain([d3.min(data, d => d.date, d3.max(data, d => d.date))])
+    .domain([d3.min(data, d=>d.Date), d3.max(data, d=>d.Date)])
     .range([-30, 30])
 
 const axisX = d3.axisBottom()
