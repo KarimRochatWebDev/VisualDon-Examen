@@ -20,35 +20,93 @@ const http = require('http')
 const data = require('../data/donnees.json')
 
 
+
+
+
+
+
+
+
+
+
+
+
 /*
 * Représentation des points
 */
-
-//Il faudrait aussi penser à la viewbox, à la taille de l'écran pour que le graphique s'adapte
-//Peut-être qu'il faut reprendre tous les points et faire un attr.('fill', colorScale) pour les remplir de couleur
-//Et peut-être pareil pour le diamètre
 
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
 const container = DOM.svg(WIDTH, HEIGHT)
 const svg = d3.select(container)
 const points = svg.append('g')
+const body = d3.select('body')
 
+/*
+//Pour chaque objet dans mon fichier des données que j'ajoute, un nouveau point est créé avec ses attributs
 points.selectAll('point')
     .data(data)
     .enter()
     .append('point')
-    .attr('x', )
-    .attr('y', )
+    .attr('x', xScale)
+    .attr('y', yScale)
+    .attr('r', diametreScale)
+    .attr('fill', colorScale)
+*/
 
+
+/* Des morceaux de codes issus de l'exemple
+
+export const svg = body.append('svg')
+  .attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
+
+export const xAxis = d3.axisBottom()
+  .ticks(4)
+export const bottomAxis = svg.append('g')
+  .attr('transform', `translate(0, ${HEIGHT - MARGIN})`)
+export const yAxis = d3.axisLeft()
+export const leftAxis = svg.append('g')
+  .attr('transform', `translate(${MARGIN}, 0)`)
+
+const body = d3.select('body')
+export const selectX = body.append('select')
+export const selectY = body.append('select')
+
+Peux-être faire un addEventListener sur chaque point pour gérer le click
+
+    .append('circle')
+      .attr('cx', CIRCLE_RADIUS)
+      .attr('cy', CIRCLE_RADIUS)
+      .attr('r', CIRCLE_RADIUS)
+
+*/
 
 /* Bout de code pouvant être intéressant
 const graph = DATA =>
-`<svg width="1000" heigth="1000" xmlns="http://www.w3.org/2000/svg">
+`<svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg">
 ${data.map((pays,i) => `<rect width="90" height="${pays.somme*8}" x="${(i)*100}" y="0" fill="blue" />
 <text x="${(i)*100}" y="${(100)}" font-family="Comic Sans MS" font-size="12" fill="black" >${pays.p} ${"="} ${pays.somme} </text>`)}
 </svg>`
 */
+
+/*
+const graphique = data =>
+'<svg width=WIDTH height=HEIGHT xmlns="http://www.w3.org/2000/svg">
+${data.map(Object, i) => '<circle r=diametreScale fill=colorScale x=xScale y=yScale/>'}
+</svg>'
+*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*

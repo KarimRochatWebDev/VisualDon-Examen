@@ -26,7 +26,6 @@
     "dependencies": {
         "billboard": "^1.0.0",
         "d3": "^5.9.2",
-        //"fs": "0.0.1-security",
         "moment": "^2.24.0",
         "node-fetch": "^2.5.0",
         "ramda": "^0.26.1"
