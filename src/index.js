@@ -24,6 +24,7 @@ const svg = d3.select('#graph')
 .attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
 const circle = svg.append('g')
 
+console.log(data.map(d=>d.Vinfinity))
 
 /*
 * Diamètre du point
@@ -50,13 +51,12 @@ const colorScale = d3.scaleLinear()
 */
 
 const yScale = d3.scaleLinear()
-.domain([0, d3.max(data, d=>d.Vinfinity)])
+.domain([0, d3.max(data.map(d=>d.Vinfinity*1000))])
 .range([HEIGHT,0])
 const axisY = d3.axisLeft()
 .scale(yScale)
 .tickFormat(d => d)
-.ticks(5)
-
+.ticks()
 
 
 
@@ -65,7 +65,7 @@ const axisY = d3.axisLeft()
 */
 
 const xScale = d3.scaleLinear()
-.domain([d3.min(data, d=>d.Date), d3.max(data, d=>d.Date)])
+.domain([d3.min(data.map(d=>d.Date)), d3.max(data.map(d=>d.Date))])
 .range([0, WIDTH])
 const axisX = d3.axisBottom()
 .scale(xScale)
@@ -90,7 +90,7 @@ svg.selectAll('circle')
 
 svg.append('g')
     .call(axisY)
-        .attr('transform', `translate(${WIDTH/2}, 0)`)
+    .attr('transform', `translate(${WIDTH/2}, 0)`)
 svg.append('g')
     .call(axisX)
     .attr('transform', `translate(0, ${HEIGHT-1})`)
