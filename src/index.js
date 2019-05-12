@@ -17,14 +17,13 @@
 const fetch = require('node-fetch')
 const d3 = require('d3')
 const moment = require('moment')
-const data = require('../data/donnees.json')
+const data = require('../data/data.json')
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
-const svg = d3.select('#graph')
-.attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
+const svg = d3.select('#graph').attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
 const circle = svg.append('g')
 
-console.log(data.map(d=>d.Vinfinity))
+
 
 /*
 * Diamètre du point
@@ -56,7 +55,6 @@ const yScale = d3.scaleLinear()
 const axisY = d3.axisLeft()
 .scale(yScale)
 .tickFormat(d => d)
-.ticks()
 
 
 
@@ -69,8 +67,7 @@ const xScale = d3.scaleLinear()
 .range([0, WIDTH])
 const axisX = d3.axisBottom()
 .scale(xScale)
-.tickFormat(d=>d)
-.ticks(5)
+.tickFormat(d => d)
 
 
 
@@ -78,15 +75,14 @@ const axisX = d3.axisBottom()
 * Représentation des points
 */
 
-
-svg.selectAll('circle')
+svg.selectAll("circle")
     .data(data)
     .enter()
-    .append('circle')
-    .attr('cx', d => xScale(d.Date))
-    .attr('cy', d => yScale(d.Vinfinity))
-    .attr('fill', d => colorScale(d.DMinimum))
-    .attr('cr', d => diametreScale(d.Diameter))
+    .append("circle")
+    .attr("cx", d => xScale(d.Date))
+    .attr("cy", d => yScale(d.Vinfinity*1000))
+    .attr("fill", d => colorScale)
+    .attr("r", 1)
 
 svg.append('g')
     .call(axisY)
