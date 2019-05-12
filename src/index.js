@@ -29,7 +29,7 @@ const circle = svg.append('g')
 
 const rayonScale = d3.scaleLinear()
 .domain([5, d3.max(data, d=>d.Diameter)])
-.range([0, 30])
+.range([0, 40])
 
 
 
@@ -52,8 +52,10 @@ const yScale = d3.scaleLinear()
 .range([HEIGHT,50])
 const axisY = d3.axisLeft()
 .scale(yScale)
-.tickFormat(d => d)
+.tickFormat(d => `${d}km/s`)
+.ticks(5)
 
+/*PEUT ÊTRE QU'IL FAUT EFFECTIVEMENT CREE 2 AXES X!!*/
 
 
 /*
@@ -65,12 +67,11 @@ const xScale = d3.scaleLinear()
 .range([50, WIDTH-50])
 const axisX = d3.axisBottom()
 .scale(xScale)
-.tickFormat(d => d)
-
-
+.tickFormat(d => `${Math.round(d/52000000)}`)
+.ticks(20)
 
 /*
-* Représentation des points
+* Représentation des cercles
 */
 
 svg.selectAll("circle")
@@ -84,11 +85,22 @@ svg.selectAll("circle")
     .attr("stroke", "white")
     .attr("opacity", 1)
 
+/*Ajout des noms
+svg.selectAll("names")
+    .data(data)
+    .enter()
+    .append("names")
+    .attr("text", d=> d.name)
+*/
 
+
+/*
+* Ajout des axes aux svg
+*/
 
 svg.append('g')
     .call(axisY)
-    .attr('transform', `translate(${WIDTH/2}, 0)`)
+    .attr('transform', `translate(${WIDTH/2}, -30)`)
 svg.append('g')
     .call(axisX)
-    .attr('transform', `translate(0, ${HEIGHT-1})`)
+    .attr('transform', `translate(0, ${HEIGHT-30})`)
