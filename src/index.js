@@ -11,65 +11,26 @@
 
 
 /*
-* Importation des librairies et des fichiers
+* Importation des librairies et des fichiers et initializsation des éléments HTML
 */
 
 const fetch = require('node-fetch')
 const d3 = require('d3')
 const moment = require('moment')
 const data = require('../data/donnees.json')
-
-
-
-
-/*
-* Définition des éléments HTML
-*/
-
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
-const container = DOM.svg(WIDTH, HEIGHT)
-const svg = d3.select(container)
-const body = d3.select('body')
-
-
-
-
-
-
-
-
-/*
-* Représentation des points
-*/
-
-
- const points = svg.append('g')
-  
-  points.selectAll('circle')
-    .data(data)
-    .enter()
-    .append('circle')
-    .attr('x', d => xScale(d.Date))
-    .attr('y', d => yScale(d.Vinfinity))
-    .attr('fill', d => colorScale(d.DMinimum))
-    .attr('r', d => diametreScale(d.Diameter))
-
-
-
-
-
-
-
-
+const svg = d3.select('#graph')
+.attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
+const circle = svg.append('g')
 
 
 /*
 * Diamètre du point
 */
 
-const diametreScale = d3.scaleLinear
-.domain((d3.min(data, d => d.Diameter), d3.max(data, d => d.Diameter)))
+const diametreScale = d3.scaleLinear()
+.domain([d3.min(data, d => d.Diameter), d3.max(data, d => d.Diameter)])
 .range([0, 10])
 
 
@@ -78,9 +39,9 @@ const diametreScale = d3.scaleLinear
 * Couleur du point
 */
 
-const colorScale = d3.scaleLinear
-.domain([d3.min(data, d => d.DMinimum, d3.max(data, d=>d.DMinimum))])
-.range([blue, red])
+const colorScale = d3.scaleLinear()
+.domain([d3.min(data, d => d.DMinimum), d3.max(data, d=>d.DMinimum)])
+.range(['blue', 'red'])
 
 
 
@@ -90,11 +51,12 @@ const colorScale = d3.scaleLinear
 
 const yScale = d3.scaleLinear()
 .domain([0, d3.max(data, d=>d.Vinfinity)])
-.range([35000, 0])
-
+.range([HEIGHT,0])
 const axisY = d3.axisLeft()
 .scale(yScale)
-.ticks(7)
+.tickFormat(d => d)
+.ticks(5)
+
 
 
 
@@ -104,8 +66,31 @@ const axisY = d3.axisLeft()
 
 const xScale = d3.scaleLinear()
 .domain([d3.min(data, d=>d.Date), d3.max(data, d=>d.Date)])
-.range([-30, 30])
-
+.range([0, WIDTH])
 const axisX = d3.axisBottom()
 .scale(xScale)
-.ticks(12)
+.tickFormat(d=>d)
+.ticks(5)
+
+
+
+/*
+* Représentation des points
+*/
+
+
+svg.selectAll('circle')
+    .data(data)
+    .enter()
+    .append('circle')
+    .attr('cx', d => xScale(d.Date))
+    .attr('cy', d => yScale(d.Vinfinity))
+    .attr('fill', d => colorScale(d.DMinimum))
+    .attr('cr', d => diametreScale(d.Diameter))
+
+svg.append('g')
+    .call(axisY)
+        .attr('transform', `translate(${WIDTH/2}, 0)`)
+svg.append('g')
+    .call(axisX)
+    .attr('transform', `translate(0, ${HEIGHT-1})`)
