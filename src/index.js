@@ -17,13 +17,12 @@
 const fetch = require('node-fetch')
 const d3 = require('d3')
 const moment = require('moment')
-const data = require('../data/datav2.json')
+const data = require('../data/data.json')
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
 const svg = d3.select('#graph').attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
 const circle = svg.append('g')
 
-console.log(d3.min(data,d=>d.DMinimum))
 /*
 * Rayon du point
 */
@@ -39,8 +38,8 @@ const rayonScale = d3.scaleLinear()
 */
 
 const colorScale = d3.scaleLinear()
-.domain([d3.min(data, d => d.DMinimum), d3.max(data, d=>d.DMinimum)])
-.range(["blue", "red"])
+.domain([d3.min(data, d=>d.DNominal), d3.max(data, d=>d.DNominal)])
+.range(["red", "blue"])
 
 
 
@@ -80,11 +79,10 @@ svg.selectAll("circle")
     .append("circle")
     .attr("cx", d => xScale(d.Date))
     .attr("cy", d => yScale(d.Vinfinity*1000))
-    //.attr("fill", "blue")
     .attr("r", d => rayonScale(d.Diameter))
+    .attr("fill", d => colorScale(d.DNominal))
     .attr("stroke", "white")
-    .attr("opacity", 0.7)
-    .attr("fill", "blue")
+    .attr("opacity", 1)
 
 
 
