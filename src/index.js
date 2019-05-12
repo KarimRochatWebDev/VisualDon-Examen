@@ -17,21 +17,20 @@
 const fetch = require('node-fetch')
 const d3 = require('d3')
 const moment = require('moment')
-const data = require('../data/data.json')
+const data = require('../data/datav2.json')
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
 const svg = d3.select('#graph').attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
 const circle = svg.append('g')
 
-
-
+console.log(d3.min(data,d=>d.DMinimum))
 /*
-* Diamètre du point
+* Rayon du point
 */
 
-const diametreScale = d3.scaleLinear()
-.domain([d3.min(data, d => d.Diameter), d3.max(data, d => d.Diameter)])
-.range([0, 10])
+const rayonScale = d3.scaleLinear()
+.domain([5, d3.max(data, d=>d.Diameter)])
+.range([0, 30])
 
 
 
@@ -41,7 +40,7 @@ const diametreScale = d3.scaleLinear()
 
 const colorScale = d3.scaleLinear()
 .domain([d3.min(data, d => d.DMinimum), d3.max(data, d=>d.DMinimum)])
-.range(['blue', 'red'])
+.range(["blue", "red"])
 
 
 
@@ -51,7 +50,7 @@ const colorScale = d3.scaleLinear()
 
 const yScale = d3.scaleLinear()
 .domain([0, d3.max(data.map(d=>d.Vinfinity*1000))])
-.range([HEIGHT,0])
+.range([HEIGHT,50])
 const axisY = d3.axisLeft()
 .scale(yScale)
 .tickFormat(d => d)
@@ -64,7 +63,7 @@ const axisY = d3.axisLeft()
 
 const xScale = d3.scaleLinear()
 .domain([d3.min(data.map(d=>d.Date)), d3.max(data.map(d=>d.Date))])
-.range([0, WIDTH])
+.range([50, WIDTH-50])
 const axisX = d3.axisBottom()
 .scale(xScale)
 .tickFormat(d => d)
@@ -81,8 +80,13 @@ svg.selectAll("circle")
     .append("circle")
     .attr("cx", d => xScale(d.Date))
     .attr("cy", d => yScale(d.Vinfinity*1000))
-    .attr("fill", d => colorScale)
-    .attr("r", 1)
+    //.attr("fill", "blue")
+    .attr("r", d => rayonScale(d.Diameter))
+    .attr("stroke", "white")
+    .attr("opacity", 0.7)
+    .attr("fill", "blue")
+
+
 
 svg.append('g')
     .call(axisY)
