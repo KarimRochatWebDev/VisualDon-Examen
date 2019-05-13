@@ -2,9 +2,7 @@
 * Importation des librairies et des fichiers et initializsation des éléments HTML
 */
 
-const fetch = require('node-fetch')
 const d3 = require('d3')
-const moment = require('moment')
 const data = require('../data/data.json')
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
