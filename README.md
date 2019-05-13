@@ -2,7 +2,7 @@
 
 1. Où vous avez trouvé les données
 
-Toutes les données sont originaires de https://cneos.jpl.nasa.gov/ca/
+Toutes les données sont originaires de https://cneos.jpl.nasa.gov/ca/.
 J'aime l'astronomie. J'ai donc recherché des jeux de données concernant à peu près n'importe quoi concernant l'Univers, comme les planètes ou les galaxies. Mais certains jeux de données sont payants, d'autres demandent de se créer un compte, d'autres ne sont pas téléchargeables et d'autres encore contiennent des données que je comprends pas. Après quelques recherches, notamment par certaines sources de données proposées sur le repo GitHub du cours, j'ai finalement trouvé cette source concernant les astréroïdes dont les données sont très intéressantes et qui offre la possibilité de télécharger le jeu de données en CSV ou Excel.  
 
 2. Comment vous les avez transformées
