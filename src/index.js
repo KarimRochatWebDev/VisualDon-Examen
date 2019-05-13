@@ -50,13 +50,23 @@ const axisY = d3.axisLeft()
 * Axe horizontal
 */
 
+//Axe qui sert de calcul pour placer les points
 const xScale = d3.scaleLinear()
 .domain([d3.min(data.map(d=>d.Date)), d3.max(data.map(d=>d.Date))])
 .range([50, WIDTH-50])
 const axisX = d3.axisBottom()
 .scale(xScale)
 .tickFormat(d => `${Math.round(d/52000000)}`)
-.ticks(20)
+.ticks(0)
+
+//Axe qui sert de visuel pour la symmétrie positif/négatif
+const xScale2 = d3.scaleLinear()
+.domain([-(d3.min(data.map(d=>d.Date))), d3.max(data.map(d=>d.Date))])
+.range([50, WIDTH-50])
+const axisX2= d3.axisBottom()
+.scale(xScale2)
+.tickFormat(d => `${Math.round(d/52000000)}jours`)
+.ticks(10)
 
 
 
@@ -100,3 +110,6 @@ svg.append('g')
 svg.append('g')
     .call(axisX)
     .attr('transform', `translate(0, ${HEIGHT-30})`)
+svg.append('g')
+    .call(axisX2)
+    .attr('transform', `translate(1, ${HEIGHT-30})`)
