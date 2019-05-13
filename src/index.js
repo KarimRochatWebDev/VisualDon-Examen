@@ -41,7 +41,7 @@ const yScale = d3.scaleLinear()
 .range([HEIGHT,50])
 const axisY = d3.axisLeft()
 .scale(yScale)
-.tickFormat(d => `${d}km/s`)
+.tickFormat(d => `${d}`)
 .ticks(5)
 
 
@@ -65,7 +65,7 @@ const xScale2 = d3.scaleLinear()
 .range([50, WIDTH-50])
 const axisX2= d3.axisBottom()
 .scale(xScale2)
-.tickFormat(d => `${Math.round(d/52000000)}jours`)
+.tickFormat(d => `${Math.round(d/52000000)}`)
 .ticks(10)
 
 
