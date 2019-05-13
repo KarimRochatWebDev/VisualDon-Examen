@@ -1,15 +1,3 @@
-
-//Ensemble de liens qui peuvent m'être utiles
-//https://momentjs.com/
-//https://github.com/idris-maps/heig-datavis-2019/blob/master/20190308-intro-data/axes.html
-//https://observablehq.com/@idris-maps/d3-definir-les-axes
-//https://observablehq.com/@idris-maps/batons-svg
-//https://observablehq.com/@idris-maps/fonctions-d3
-//https://github.com/idris-maps/exemple-transformation-de-donnees-avec-node/blob/master/drawGraph.js
-//https://github.com/idris-maps/heig-datavis-2019/blob/master/20190301-manipulation-dom/exemples/exemple_1.html
-
-
-
 /*
 * Importation des librairies et des fichiers et initializsation des éléments HTML
 */
@@ -22,6 +10,7 @@ const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
 const svg = d3.select('#graph').attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
 const circle = svg.append('g')
+const text = svg.append('g')
 
 /*
 * Rayon du point
@@ -55,7 +44,6 @@ const axisY = d3.axisLeft()
 .tickFormat(d => `${d}km/s`)
 .ticks(5)
 
-/*PEUT ÊTRE QU'IL FAUT EFFECTIVEMENT CREE 2 AXES X!!*/
 
 
 /*
@@ -85,17 +73,23 @@ svg.selectAll("circle")
     .attr("stroke", "white")
     .attr("opacity", 1)
 
-/*Ajout des noms
-svg.selectAll("names")
+//Ajout des noms
+svg.selectAll("text")
     .data(data)
     .enter()
-    .append("names")
-    .attr("text", d=> d.name)
-*/
+    .append("text")
+    .attr("x", d => xScale(d.Date))
+    .attr("y", d => yScale(d.Vinfinity*1000))
+    .attr("text-anchor", "middle")
+    .attr("font-family", "arial")
+    .attr("fill", "white")
+    .attr("font-size", 10)
+    .text(d => d.Name)
+
 
 
 /*
-* Ajout des axes aux svg
+* Ajout au svg
 */
 
 svg.append('g')
