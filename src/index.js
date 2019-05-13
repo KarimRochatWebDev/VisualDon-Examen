@@ -10,6 +10,8 @@ const svg = d3.select('#graph').attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
 const circle = svg.append('g')
 const text = svg.append('g')
 
+
+
 /*
 * Rayon du point
 */
@@ -55,6 +57,8 @@ const axisX = d3.axisBottom()
 .scale(xScale)
 .tickFormat(d => `${Math.round(d/52000000)}`)
 .ticks(20)
+
+
 
 /*
 * Représentation des cercles
