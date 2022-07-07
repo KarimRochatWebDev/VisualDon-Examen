@@ -26,7 +26,7 @@
     "dependencies": {
         "billboard": "^1.0.0",
         "d3": "^5.9.2",
-        "moment": "^2.24.0",
+        "moment": "^2.29.4",
         "node-fetch": "^2.5.0",
         "ramda": "^0.26.1"
     }
